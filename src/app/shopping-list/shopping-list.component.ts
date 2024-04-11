@@ -1,13 +1,16 @@
 import { Component } from '@angular/core';
-import { ingredient } from '../shared/ingredient.model';
+import { Ingredient } from '../shared/ingredient.model';
 @Component({
   selector: 'app-shopping-list',
   templateUrl: './shopping-list.component.html',
   styleUrl: './shopping-list.component.css',
 })
 export class ShoppingListComponent {
-  ingredients: ingredient[] = [
-    new ingredient('tomato', 3),
-    new ingredient('potato', 3),
+  ingredients: Ingredient[] = [
+    new Ingredient('tomato', 3),
+    new Ingredient('potato', 3),
   ];
+  onIngredientAdded(ingredient: Ingredient) {
+    this.ingredients.push(ingredient);
+  }
 }
