@@ -10,7 +10,7 @@ export class RecipeService {
       'mack and cheese',
       'this is a test',
       'https://t3.ftcdn.net/jpg/01/79/59/92/360_F_179599293_7mePKnajSM4bggDa8NkKpcAHKl3pow2l.webp',
-      [new Ingredient('meat', 1), new Ingredient('french fries', 10)],
+      [new Ingredient('meat', 1), new Ingredient('french fries', 10)]
     ),
     new Recipe(
       'double cheese burger',
@@ -20,7 +20,7 @@ export class RecipeService {
         new Ingredient('chicken', 1),
         new Ingredient('salt', 7),
         new Ingredient('paper', 88),
-      ],
+      ]
     ),
   ];
   constructor(private slService: ShoppingListService) {}
