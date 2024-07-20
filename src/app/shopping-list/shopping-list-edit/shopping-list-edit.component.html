@@ -1,18 +1,33 @@
 <div class="taher row">
   <div class="col-xs-12">
-    <form>
+    <form (ngSubmit)="onAddItem(f)" #f="ngForm">
       <div class="rwo">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
-          <input #nameInput type="text" id="name" class="form-control" />
+          <input
+            name="name"
+            type="text"
+            id="name"
+            class="form-control"
+            ngModel
+            required
+            text
+          />
         </div>
         <div class="col-sm-2 form-group">
           <label for="amount">Amount</label>
-          <input #amountInput type="number" id="amount" class="form-control" />
+          <input
+            name="amount"
+            type="number"
+            id="amount"
+            class="form-control"
+            ngModel
+            [pattern]="'^[1-9]+[0-9]*$'"
+          />
         </div>
         <div class="col-xs-12">
-          <button class="btn btn-success" type="button" (click)="onAddItem()">
-            Add
+          <button class="btn btn-success" type="submit" [disabled]="!f.valid">
+            {{ editMode ? "Update" : "Add" }}
           </button>
           <button class="btn btn-danger" type="button">Delete</button>
           <button class="btn btn-primary" type="reset">Clear</button>
