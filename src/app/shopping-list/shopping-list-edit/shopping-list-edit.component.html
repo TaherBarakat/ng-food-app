@@ -1,6 +1,6 @@
 <div class="taher row">
   <div class="col-xs-12">
-    <form (ngSubmit)="onAddItem(f)" #f="ngForm">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
       <div class="rwo">
         <div class="col-sm-5 form-group">
           <label for="name">Name</label>
@@ -22,6 +22,7 @@
             id="amount"
             class="form-control"
             ngModel
+            required
             [pattern]="'^[1-9]+[0-9]*$'"
           />
         </div>
@@ -29,8 +30,17 @@
           <button class="btn btn-success" type="submit" [disabled]="!f.valid">
             {{ editMode ? "Update" : "Add" }}
           </button>
-          <button class="btn btn-danger" type="button">Delete</button>
-          <button class="btn btn-primary" type="reset">Clear</button>
+          <button
+            *ngIf="editMode"
+            class="btn btn-danger"
+            type="button"
+            (click)="onDelete()"
+          >
+            Delete
+          </button>
+          <button class="btn btn-primary" type="reset" (click)="onClear()">
+            Clear
+          </button>
         </div>
       </div>
     </form>
