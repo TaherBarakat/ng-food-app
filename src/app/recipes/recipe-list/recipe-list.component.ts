@@ -12,11 +12,14 @@ export class RecipeListComponent {
   constructor(
     private recipeService: RecipeService,
     private router: Router,
-    private route: ActivatedRoute,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.recipes = this.recipeService.getRecipes();
+    this.recipeService.recipeChanged.subscribe((recipes: Recipe[]) => {
+      this.recipes = recipes;
+    });
   }
   onNewRecipe() {
     this.router.navigate(['new'], { relativeTo: this.route });

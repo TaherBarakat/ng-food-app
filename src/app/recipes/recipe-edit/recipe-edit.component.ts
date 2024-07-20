@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params } from '@angular/router';
 import { RecipeService } from '../recipe.service';
+import { Recipe } from '../recipe.model';
 
 @Component({
   selector: 'app-recipe-edit',
@@ -25,11 +26,29 @@ export class RecipeEditComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    let formValue = this.recipeForm.value;
+    // const newRecipe = new Recipe(
+    //   formValue.name,
+    //   formValue.description,
+    //   formValue.imagePath,
+    //   this.ingredientArrayCtrls.value
+    // );
+    // console.log(this.recipeForm);
+    if (this.editMode) {
+      this.recipeService.updateRecipe(this.id, formValue);
+    } else {
+      this.recipeService.addRecipe(formValue);
+    }
+    // console.log(this.recipeForm.value);
+  }
+
   private initForm() {
     let recipeName = '';
     let recipeImagePath = '';
     let recipeDescription = '';
     let recipeIngredients = new FormArray([]);
+
     if (this.editMode) {
       const recipe = this.recipeService.getRecipe(this.id);
       recipeName = recipe.name;
@@ -56,17 +75,16 @@ export class RecipeEditComponent implements OnInit {
       description: new FormControl(recipeDescription, Validators.required),
       ingredients: recipeIngredients,
     });
+
     this.ingredientArrayCtrls = (<FormArray>(
       this.recipeForm.get('ingredients')
     )).controls;
-    console.log((<FormArray>this.recipeForm.get('ingredients')).controls);
-    console.log(this.recipeForm.controls);
+    // console.log((<FormArray>this.recipeForm.get('ingredients')).controls);
+    // console.log(this.recipeForm.controls);
   }
-  onSubmit() {
-    console.log(this.recipeForm.value);
-  }
+
   onAddIngredient() {
-    (<FormArray>this.recipeForm.get('ingredients')).controls.push(
+    (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
         name: new FormControl(null, Validators.required),
         amount: new FormControl(null, [
@@ -76,8 +94,4 @@ export class RecipeEditComponent implements OnInit {
       })
     );
   }
-  // log(x) {
-  //   console.log(x);
-  //   console.log('test');
-  // }
 }
