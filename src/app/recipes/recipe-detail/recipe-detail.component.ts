@@ -12,7 +12,7 @@ export class RecipeDetailComponent {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router,
+    private router: Router
   ) {}
   recipe: Recipe;
   id: number;
@@ -29,5 +29,8 @@ export class RecipeDetailComponent {
   onEditRecipe() {
     console.log('edit');
     this.router.navigate(['edit'], { relativeTo: this.route });
+  }
+  onDeleteRecipe() {
+    this.recipeService.deleteRecipe(this.id);
   }
 }
