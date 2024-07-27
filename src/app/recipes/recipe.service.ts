@@ -8,30 +8,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class RecipeService {
   recipeChanged = new Subject<Recipe[]>();
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'mack and cheese',
-      'this is a test',
-      'https://t3.ftcdn.net/jpg/01/79/59/92/360_F_179599293_7mePKnajSM4bggDa8NkKpcAHKl3pow2l.webp',
-      [new Ingredient('meat', 1), new Ingredient('french fries', 10)]
-    ),
-    new Recipe(
-      'double cheese burger',
-      'this is a test22222',
-      'https://t3.ftcdn.net/jpg/01/79/59/92/360_F_179599293_7mePKnajSM4bggDa8NkKpcAHKl3pow2l.webp',
-      [
-        new Ingredient('chicken', 1),
-        new Ingredient('salt', 7),
-        new Ingredient('paper', 88),
-      ]
-    ),
-  ];
+  private recipes: Recipe[] = [];
+  // = [
+  //   new Recipe(
+  //     'mack and cheese',
+  //     'this is a test',
+  //     'https://t3.ftcdn.net/jpg/01/79/59/92/360_F_179599293_7mePKnajSM4bggDa8NkKpcAHKl3pow2l.webp',
+  //     [new Ingredient('meat', 1), new Ingredient('french fries', 10)]
+  //   ),
+  //   new Recipe(
+  //     'double cheese burger',
+  //     'this is a test22222',
+  //     'https://t3.ftcdn.net/jpg/01/79/59/92/360_F_179599293_7mePKnajSM4bggDa8NkKpcAHKl3pow2l.webp',
+  //     [
+  //       new Ingredient('chicken', 1),
+  //       new Ingredient('salt', 7),
+  //       new Ingredient('paper', 88),
+  //     ]
+  //   ),
+  // ];
   constructor(
     private slService: ShoppingListService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
 
+  setRecipes(recipes: Recipe[]) {
+    this.recipes = recipes;
+    console.log(this.recipes.slice());
+
+    this.recipeChanged.next(this.recipes.slice());
+  }
   getRecipes() {
     return this.recipes.slice();
   }
