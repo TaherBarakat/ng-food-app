@@ -13,8 +13,21 @@ export class AuthComponent {
     this.isLogin = !this.isLogin;
   }
   onSubmit(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
     const { email, password } = form.value;
     console.log(email, password);
-    this.authSrv.signup(email, password).subscribe((d) => console.log(d));
+
+    if (this.isLogin) {
+      // dddddddddddd
+    } else {
+      this.authSrv.signup(email, password).subscribe(
+        (resData) => console.log(resData),
+        (error) => console.log(error)
+      );
+    }
+    // form.reset()
   }
 }
