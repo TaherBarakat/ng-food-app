@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthResponseData, AuthService } from './auth.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
@@ -13,7 +14,11 @@ export class AuthComponent {
   isLoading = false;
   error = null;
 
-  constructor(private authSrv: AuthService) {}
+  constructor(
+    private authSrv: AuthService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   onSwitchMode() {
     this.isLogin = !this.isLogin;
@@ -40,6 +45,7 @@ export class AuthComponent {
       next: (resData) => {
         this.isLoading = !this.isLoading;
         console.log(resData);
+        this.router.navigate(['/recipes'], { relativeTo: this.route });
       },
       error: (errorMessage: HttpErrorResponse) => {
         this.isLoading = !this.isLoading;
