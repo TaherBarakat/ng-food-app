@@ -1,7 +1,8 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
-import { catchError, tap, throwError } from 'rxjs';
+import { catchError, Subject, tap, throwError } from 'rxjs';
+import { User } from './user.moder';
 
 export interface AuthResponseData {
   kind: string;
@@ -19,7 +20,7 @@ export interface AuthResponseData {
 })
 export class AuthService {
   constructor(private http: HttpClient) {}
-
+  user = new Subject<User>();
   signup(email: string, password: string) {
     console.log(email, password);
     return this.http
@@ -37,10 +38,7 @@ export class AuthService {
           },
         }
       )
-      .pipe(
-        tap((res) => console.log(res)),
-        catchError(this.handleError)
-      );
+      .pipe(tap(this.handleAuthentication), catchError(this.handleError));
   }
 
   signin(email: string, password: string) {
@@ -58,12 +56,17 @@ export class AuthService {
           },
         }
       )
-      .pipe(
-        tap((res) => console.log(res)),
-        catchError(this.handleError)
-      );
+      .pipe(tap(this.handleAuthentication), catchError(this.handleError));
   }
 
+  private handleAuthentication<Observable>(resData: AuthResponseData) {
+    let { email, idToken, expiresIn, localId } = resData;
+    const expirationDate = new Date(new Date().getDate() + +expiresIn * 1000);
+    const user = new User(email, localId, idToken, expirationDate);
+    this.user.next(user);
+    console.log(resData);
+    console.log(new Date().getDate(), expiresIn, expirationDate);
+  }
   private handleError<Observable>(errorRes: HttpErrorResponse) {
     let errorMessage = 'An error occurred!';
     if (!errorRes.error || !errorRes.error.error) {
