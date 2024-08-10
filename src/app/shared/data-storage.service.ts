@@ -29,30 +29,30 @@ export class DataStorageService {
   }
   fetchRecipes() {
     // let tok = 111;
-    return this.authSrv.user.pipe(
-      take(1),
-      exhaustMap((user) => {
-        console.log(user, 'exhaustMap');
+    // return this.authSrv.user.pipe(
+    //   take(1),
+    //   exhaustMap((user) => {
+    // console.log(user, 'exhaustMap');
 
-        return this.http.get<Recipe[]>(
-          'https://ng-recipe-book-e52cf-default-rtdb.firebaseio.com/recipes.json ',
-          { params: new HttpParams().set('auth', user.token) }
-        );
-      }),
+    return this.http
+      .get<Recipe[]>(
+        `https://ng-recipe-book-e52cf-default-rtdb.firebaseio.com/recipes.json?`
+        // { params: { auth: user.token } }
+      )
+      .pipe(
+        map((recipes) => {
+          console.log(recipes, 'D');
 
-      map((recipes) => {
-        console.log(recipes, 'D');
-
-        return recipes.map((recipe) => {
-          return {
-            ...recipe,
-            ingredients: recipe.ingredients ? recipe.ingredients : [],
-          };
-        });
-      }),
-      tap((recipes) => {
-        this.recipeServices.setRecipes(recipes);
-      })
-    );
+          return recipes.map((recipe) => {
+            return {
+              ...recipe,
+              ingredients: recipe.ingredients ? recipe.ingredients : [],
+            };
+          });
+        }),
+        tap((recipes) => {
+          this.recipeServices.setRecipes(recipes);
+        })
+      );
   }
 }

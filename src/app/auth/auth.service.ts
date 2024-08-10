@@ -19,7 +19,7 @@ export interface AuthResponseData {
   providedIn: 'root',
 })
 export class AuthService {
-  user = new BehaviorSubject<User>(null);
+  user = new BehaviorSubject<User | null>(null);
   constructor(private http: HttpClient) {}
 
   signup(email: string, password: string) {
