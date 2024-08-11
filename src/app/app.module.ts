@@ -24,6 +24,9 @@ import {
 import { AuthComponent } from './auth/auth.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { authInterceptor } from './auth/auth-interceptor.interceptor';
+import { AlertComponent } from './alert/alert.component';
+import { PlaceholderDirective } from './placeholder/placeholder.directive';
+// import { PlaceholderDirective } from './placeholder.directive';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,8 @@ import { authInterceptor } from './auth/auth-interceptor.interceptor';
     RecipeEditComponent,
     AuthComponent,
     SpinnerComponent,
+    AlertComponent,
+    PlaceholderDirective,
   ],
   imports: [
     FormsModule,
