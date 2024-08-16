@@ -33,4 +33,7 @@ export class RecipeDetailComponent {
   onDeleteRecipe() {
     this.recipeService.deleteRecipe(this.id);
   }
+  test() {
+    console.log('DDDDDDD');
+  }
 }
