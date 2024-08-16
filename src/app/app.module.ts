@@ -23,6 +23,7 @@ import { PlaceholderDirective } from './placeholder/placeholder.directive';
 import { RecipesModule } from './recipes/recipes.module';
 import { ShoppingListModule } from './shopping-list/shopping-list.module';
 import { SharedModule } from './shared/shared.module';
+import { CoreModule } from './core.module';
 // import { PlaceholderDirective } from './placeholder.directive';
 @NgModule({
   declarations: [AppComponent, HeaderComponent, AuthComponent],
@@ -35,17 +36,18 @@ import { SharedModule } from './shared/shared.module';
     RecipesModule,
     ShoppingListModule,
     SharedModule,
+    CoreModule,
   ],
-  providers: [
-    provideHttpClient(withInterceptors([authInterceptor])),
-    // {
-    //   useFactory: authInterceptor,
-    //   useValue: ,
-    //   provide: HTTP_INTERCEPTORS,
-    //   multi: false,
-    // },
-    ShoppingListService,
-  ],
+  // providers: [
+  //   provideHttpClient(withInterceptors([authInterceptor])),
+  //   // {
+  //   //   useFactory: authInterceptor,
+  //   //   useValue: ,
+  //   //   provide: HTTP_INTERCEPTORS,
+  //   //   multi: false,
+  //   // },
+  //   ShoppingListService,
+  // ],
   bootstrap: [AppComponent],
   // exports: [DropdownDirective],
 })
